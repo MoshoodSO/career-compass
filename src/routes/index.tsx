@@ -162,12 +162,26 @@ function CareerCopilot() {
     setStatus("loading");
     try {
       const res = await fetch(WEBHOOK_URL, { method: "POST", body: data });
-      if (!res.ok) throw new Error("Request failed");
-      const json = (await res.json()) as Report;
+      const raw = await res.text();
+      if (!res.ok) {
+        console.error("Webhook error", res.status, raw);
+        throw new Error(`Request failed (${res.status})`);
+      }
+      if (!raw.trim()) {
+        console.error("Webhook returned an empty body");
+        throw new Error("Empty response");
+      }
+      const parsed = JSON.parse(raw) as Report | Report[] | { data?: Report };
+      const json = (Array.isArray(parsed) ? parsed[0] : "data" in parsed && parsed.data ? parsed.data : parsed) as Report;
+      if (!json || typeof json !== "object" || !json.confidence_letter) {
+        console.error("Unexpected webhook payload", parsed);
+        throw new Error("Unexpected response shape");
+      }
       setReport(json);
       setOpenCard(1);
       setStatus("results");
-    } catch {
+    } catch (err) {
+      console.error("Career Copilot request failed:", err);
       setError("Something went wrong — please try again.");
       setStatus("form");
     }
