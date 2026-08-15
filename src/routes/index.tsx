@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-const WEBHOOK_URL = "https://moshoodso.app.n8n.cloud/webhook/career-copilot";
+const WEBHOOK_URL = "https://moshoodso.app.n8n.cloud/webhook-test/career-copilot"; 
 
 export const Route = createFileRoute("/")({
   head: () => ({
