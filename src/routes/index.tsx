@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { parseReport, type Report } from "@/lib/parse-report";
+
 
 const WEBHOOK_URL = "https://moshoodso.app.n8n.cloud/webhook/career-copilot"; 
 
@@ -25,16 +27,8 @@ export const Route = createFileRoute("/")({
   component: CareerCopilot,
 });
 
-type Skill = { skill: string; explanation: string };
-type Report = {
-  confidence_letter: string;
-  cv_recommendations: string[];
-  linkedin_recommendations: string[];
-  transferable_skills: Skill[];
-  can_apply: boolean;
-  gaps_to_address: string[];
-  career_fit_explanation: string;
-};
+
+
 
 const LOADING_MESSAGES = [
   "Reading your story...",
@@ -113,24 +107,36 @@ function AccordionCard({
   );
 }
 
-const Paragraphs = ({ text, italic }: { text: string; italic?: boolean }) => (
-  <div className={`space-y-4 ${italic ? "text-[1.08rem] italic sm:text-[1.15rem]" : ""}`}>
-    {text
-      .split(/\n\s*\n/)
-      .filter((c) => c.trim())
-      .map((chunk, i) => (
-        <p key={i}>{chunk.trim()}</p>
-      ))}
-  </div>
+const Empty = () => (
+  <p className="text-muted-foreground">
+    This section didn’t come back in the response — run the analysis again to fill it in.
+  </p>
 );
 
-const NumberedList = ({ items }: { items: string[] }) => (
-  <ol className="list-decimal space-y-3 pl-6 marker:font-semibold marker:text-primary">
-    {items.map((item, i) => (
-      <li key={i}>{item}</li>
-    ))}
-  </ol>
-);
+const Paragraphs = ({ text, italic }: { text: string; italic?: boolean }) => {
+  const chunks = text.split(/\n\s*\n/).filter((c) => c.trim());
+  if (chunks.length === 0) return <Empty />;
+  return (
+    <div className={`space-y-4 ${italic ? "text-[1.08rem] italic sm:text-[1.15rem]" : ""}`}>
+      {chunks.map((chunk, i) => (
+        <p key={i}>{chunk.trim()}</p>
+      ))}
+    </div>
+  );
+};
+
+const NumberedList = ({ items }: { items: string[] }) =>
+  items.length === 0 ? (
+    <Empty />
+  ) : (
+    <ol className="list-decimal space-y-3 pl-6 marker:font-semibold marker:text-primary">
+      {items.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ol>
+  );
+
+
 
 function CareerCopilot() {
   const [status, setStatus] = useState<"form" | "loading" | "results">("form");
@@ -171,13 +177,10 @@ function CareerCopilot() {
         console.error("Webhook returned an empty body");
         throw new Error("Empty response");
       }
-      const parsed = JSON.parse(raw) as Report | Report[] | { data?: Report };
-      const json = (Array.isArray(parsed) ? parsed[0] : "data" in parsed && parsed.data ? parsed.data : parsed) as Report;
-      if (!json || typeof json !== "object" || !json.confidence_letter) {
-        console.error("Unexpected webhook payload", parsed);
-        throw new Error("Unexpected response shape");
-      }
+      console.log("Career Copilot raw response:", raw);
+      const json = parseReport(raw);
       setReport(json);
+
       setOpenCard(1);
       setStatus("results");
     } catch (err) {
