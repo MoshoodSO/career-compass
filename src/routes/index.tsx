@@ -165,13 +165,10 @@ function CareerCopilot() {
         console.error("Webhook returned an empty body");
         throw new Error("Empty response");
       }
-      const parsed = JSON.parse(raw) as Report | Report[] | { data?: Report };
-      const json = (Array.isArray(parsed) ? parsed[0] : "data" in parsed && parsed.data ? parsed.data : parsed) as Report;
-      if (!json || typeof json !== "object" || !json.confidence_letter) {
-        console.error("Unexpected webhook payload", parsed);
-        throw new Error("Unexpected response shape");
-      }
+      console.log("Career Copilot raw response:", raw);
+      const json = parseReport(raw);
       setReport(json);
+
       setOpenCard(1);
       setStatus("results");
     } catch (err) {
