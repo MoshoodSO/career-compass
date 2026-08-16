@@ -106,12 +106,10 @@ export function parseReport(rawBody: string): Report {
 
   if (!value || typeof value !== "object") throw new Error("Unexpected response shape");
   const obj = value as Record<string, unknown>;
-  if (typeof obj["confidence_letter"] !== "string" || !obj["confidence_letter"].trim()) {
-    throw new Error("Unexpected response shape");
-  }
 
-  return {
-    confidence_letter: obj["confidence_letter"],
+  const report: Report = {
+    confidence_letter:
+      typeof obj["confidence_letter"] === "string" ? obj["confidence_letter"] : "",
     cv_recommendations: asStringArray(obj["cv_recommendations"]),
     linkedin_recommendations: asStringArray(obj["linkedin_recommendations"]),
     transferable_skills: asSkills(obj["transferable_skills"]),
@@ -120,7 +118,20 @@ export function parseReport(rawBody: string): Report {
     career_fit_explanation:
       typeof obj["career_fit_explanation"] === "string" ? obj["career_fit_explanation"] : "",
   };
+
+  // A truncated answer still has value — only fail when nothing usable arrived.
+  const hasContent =
+    !!report.confidence_letter.trim() ||
+    !!report.career_fit_explanation.trim() ||
+    report.cv_recommendations.length > 0 ||
+    report.linkedin_recommendations.length > 0 ||
+    report.transferable_skills.length > 0 ||
+    report.gaps_to_address.length > 0;
+  if (!hasContent) throw new Error("Unexpected response shape");
+
+  return report;
 }
+
 
 function stripCodeFence(text: string): string {
   const trimmed = text.trim();
