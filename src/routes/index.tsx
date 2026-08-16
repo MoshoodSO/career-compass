@@ -107,23 +107,35 @@ function AccordionCard({
   );
 }
 
-const Paragraphs = ({ text, italic }: { text: string; italic?: boolean }) => (
-  <div className={`space-y-4 ${italic ? "text-[1.08rem] italic sm:text-[1.15rem]" : ""}`}>
-    {text
-      .split(/\n\s*\n/)
-      .filter((c) => c.trim())
-      .map((chunk, i) => (
-        <p key={i}>{chunk.trim()}</p>
-      ))}
-  </div>
+const Empty = () => (
+  <p className="text-muted-foreground">
+    This section didn’t come back in the response — run the analysis again to fill it in.
+  </p>
 );
 
-const NumberedList = ({ items }: { items: string[] }) => (
-  <ol className="list-decimal space-y-3 pl-6 marker:font-semibold marker:text-primary">
-    {items.map((item, i) => (
-      <li key={i}>{item}</li>
-    ))}
-  </ol>
+const Paragraphs = ({ text, italic }: { text: string; italic?: boolean }) => {
+  const chunks = text.split(/\n\s*\n/).filter((c) => c.trim());
+  if (chunks.length === 0) return <Empty />;
+  return (
+    <div className={`space-y-4 ${italic ? "text-[1.08rem] italic sm:text-[1.15rem]" : ""}`}>
+      {chunks.map((chunk, i) => (
+        <p key={i}>{chunk.trim()}</p>
+      ))}
+    </div>
+  );
+};
+
+const NumberedList = ({ items }: { items: string[] }) =>
+  items.length === 0 ? (
+    <Empty />
+  ) : (
+    <ol className="list-decimal space-y-3 pl-6 marker:font-semibold marker:text-primary">
+      {items.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ol>
+  );
+
 );
 
 function CareerCopilot() {
