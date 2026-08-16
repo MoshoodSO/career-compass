@@ -27,16 +27,8 @@ export const Route = createFileRoute("/")({
   component: CareerCopilot,
 });
 
-type Skill = { skill: string; explanation: string };
-type Report = {
-  confidence_letter: string;
-  cv_recommendations: string[];
-  linkedin_recommendations: string[];
-  transferable_skills: Skill[];
-  can_apply: boolean;
-  gaps_to_address: string[];
-  career_fit_explanation: string;
-};
+
+
 
 const LOADING_MESSAGES = [
   "Reading your story...",
