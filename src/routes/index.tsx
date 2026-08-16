@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { parseReport, type Report } from "@/lib/parse-report";
+
 
 const WEBHOOK_URL = "https://moshoodso.app.n8n.cloud/webhook/career-copilot"; 
 
