@@ -136,7 +136,7 @@ const NumberedList = ({ items }: { items: string[] }) =>
     </ol>
   );
 
-);
+
 
 function CareerCopilot() {
   const [status, setStatus] = useState<"form" | "loading" | "results">("form");
