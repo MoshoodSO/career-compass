@@ -1,6 +1,6 @@
-# Career Compass — Career Copilot
+# Career Copilot
 
-Career Compass (a.k.a. Career Copilot) helps job seekers turn their CV and job descriptions into a clear, actionable plan. Upload your CV, paste the job description and (optionally) a LinkedIn export — get a friendly, easy-to-use report that tells you why you're a good fit, how to improve your CV and LinkedIn, which transferable skills to emphasize, and whether you should apply.
+Career Copilot helps job seekers turn their CV and job descriptions into a clear, actionable plan. Upload your CV, paste the job description and (optionally) a LinkedIn export — get a friendly, easy-to-use report that tells you why you're a good fit, how to improve your CV and LinkedIn, which transferable skills to emphasize, and whether you should apply.
 
 ---
 
@@ -11,7 +11,7 @@ Career Compass (a.k.a. Career Copilot) helps job seekers turn their CV and job d
 
 ---
 
-## Key features (in plain English)
+## Key features
 - Upload your CV (PDF) and paste the job description — no complicated steps.
 - Optionally upload a LinkedIn PDF to get profile-specific tips.
 - Fast results presented as five clear sections you can expand and copy:
