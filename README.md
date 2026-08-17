@@ -24,7 +24,7 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 
 ---
 
-## How it works (simple)
+## How it works 
 1. Fill in the form on the site: upload your CV (required), paste the job description (required), and upload LinkedIn PDF (optional).
 2. Click the button to analyze — the app sends your files to a server that creates a short, readable report.
 3. The report appears on-screen in five neat cards. Click any card to expand and copy the text.
