@@ -1,215 +1,89 @@
-# Career Compass (Career Copilot)
+# Career Compass — Career Copilot
 
-A responsive React single-page app that analyzes a CV, job description, and optional LinkedIn PDF to generate tailored career guidance. Built with TanStack Start + React and intended to POST user inputs to a webhook which returns a structured JSON report.
-
-Important: This project is connected to Lovable (https://lovable.dev). Avoid rewriting published git history (force-pushes, rebasing/amending/squashing commits already pushed) — changes sync back to Lovable and rewriting history may cause loss of project history.
+Career Compass (a.k.a. Career Copilot) helps job seekers turn their CV and job descriptions into a clear, actionable plan. Upload your CV, paste the job description and (optionally) a LinkedIn export — get a friendly, easy-to-use report that tells you why you're a good fit, how to improve your CV and LinkedIn, which transferable skills to emphasize, and whether you should apply.
 
 ---
 
-Table of contents
-- [Key features](#key-features)
-- [Demo data / API contract](#demo-data--api-contract)
-- [Tech stack](#tech-stack)
-- [Project structure](#project-structure)
-- [Getting started (installation)](#getting-started-installation)
-- [Development & build scripts](#development--build-scripts)
-- [Usage examples](#usage-examples)
-  - [Client: submit form (example)](#client-submit-form-example)
-  - [Webhook: expected response shape (example)](#webhook-expected-response-shape-example)
-  - [Curl example for webhook testing](#curl-example-for-webhook-testing)
-- [Contributing](#contributing)
-- [License](#license)
+## Quick overview
+- Purpose: Give practical, personalized guidance to help you apply for jobs with more confidence.
+- Audience: Job seekers at all levels who want a simple, fast way to assess fit and improve their applications.
+- What you get: A short confidence letter, CV tips, LinkedIn tips, a skills summary, interview preparation gaps, and a plain-language explanation of how you fit the role.
 
 ---
 
-## Key features
-- Upload your CV (PDF), paste a job description, and optionally upload a LinkedIn PDF.
-- Simple, accessible two-state UI: Form and Results.
-- Intentional loading states with helpful progress messages while the report is generated.
-- Results rendered as five distinct, copyable accordion cards:
-  1. Confidence / cover-style letter
-  2. CV recommendations
-  3. LinkedIn recommendations
-  4. Transferable skills + gaps + apply verdict
-  5. Career fit explanation
-- No client-side paid APIs — the front-end POSTs a FormData payload to a webhook that performs analysis and returns a JSON object with a fixed contract (see below).
-- Built with an accessible component library (Radix UI primitives + UI helpers), Tailwind-based styling, and TanStack React Start routing.
+## Key features (in plain English)
+- Upload your CV (PDF) and paste the job description — no complicated steps.
+- Optionally upload a LinkedIn PDF to get profile-specific tips.
+- Fast results presented as five clear sections you can expand and copy:
+  - Why you can do this (a short confidence letter you can use in applications)
+  - How to strengthen your CV (easy, actionable suggestions)
+  - How to improve your LinkedIn (profile edits that make a difference)
+  - Transferable skills and interview prep (what to highlight and what to study)
+  - How you fit the role (a plain-language summary)
+- Copy buttons on each section let you quickly paste text into emails, applications or documents.
 
 ---
 
-## Demo data / API contract
+## How it works (simple)
+1. Fill in the form on the site: upload your CV (required), paste the job description (required), and upload LinkedIn PDF (optional).
+2. Click the button to analyze — the app sends your files to a server that creates a short, readable report.
+3. The report appears on-screen in five neat cards. Click any card to expand and copy the text.
 
-The front-end expects the webhook to return a JSON object with the exact keys below (do not rename):
-
-- `confidence_letter` — string
-- `cv_recommendations` — array of strings
-- `linkedin_recommendations` — array of strings
-- `transferable_skills` — array of objects: { "skill": string, "explanation": string }
-- `can_apply` — boolean
-- `gaps_to_address` — array of strings
-- `career_fit_explanation` — string
-
-Form fields posted (FormData keys):
-- `cv` — CV PDF file (file input)
-- `job_description` — job description text (textarea)
-- `linkedin_pdf` — LinkedIn PDF file (optional)
-
-The app sends a POST with a FormData object and does not set Content-Type manually (let the browser set the appropriate multipart form boundary).
+No technical setup is required to use the live site — just use the web interface.
 
 ---
 
-## Tech stack
-- Language: TypeScript
-- Framework / runtime: React (v19) + TanStack React Start (file-based routes)
-- Bundler: Vite
-- Styling: Tailwind CSS (with utility components)
-- Key libraries:
-  - @tanstack/react-start, @tanstack/react-router, @tanstack/react-query
-  - Radix UI primitives for accessible UI
-  - react-hook-form and zod for form handling/validation
-  - lucide-react for icons
-  - sonner for toast/notifications
-
-(See `package.json` for the full dependency list.)
+## Getting started (for people who want to run it locally)
+If you're not running the site from the live URL and prefer to run it on your computer, the project uses standard JavaScript tooling. If you need help with local setup, tell us which operating system you use and we’ll provide step-by-step instructions.
 
 ---
 
-## Project structure (top-level highlights)
-```text
-.
-├─ public/                 # static assets (favicon, robots.txt)
-├─ src/
-│  ├─ components/          # UI components (lots of Radix + Tailwind primitives)
-│  │  └─ ui/               # small UI primitives (button, accordion, input, etc.)
-│  ├─ hooks/               # shared hooks
-│  ├─ lib/                 # server-side helpers (error-capture, error-page, etc.)
-│  ├─ routes/              # file-based routes (index.tsx, __root.tsx, etc.)
-│  ├─ router.tsx           # router entry
-│  ├─ server.ts            # Cloudflare / SSR adapter entrypoint
-│  ├─ start.ts             # app boot
-│  └─ styles.css           # global styles
-├─ package.json
-├─ tsconfig.json
-├─ vite.config.ts
-└─ .lovable/               # Lovable project sync metadata
-```
+## Example of what you'll receive (plain text)
+- Why you can do this:
+  "Dear Hiring Team — I believe I am a strong fit because..."
 
-How it fits together:
-- The UI is a Vite-powered React SPA using TanStack Start's file-based routes. The main form collects the CV, job description, and optional LinkedIn PDF, bundles them in a FormData POST to the configured webhook, and displays the returned JSON in five accordion-style cards. Server-side helper files (src/lib, src/server.ts) handle SSR entry and error rendering.
+- CV tips:
+  1. Add measurable outcomes (e.g., "increased engagement by 30%")
+  2. Put your most relevant experience first
 
----
+- LinkedIn tips:
+  1. Add a short headline that summarizes your role and impact
+  2. Include 2–3 bullets under your most recent role with metrics
 
-## Getting started (installation)
+- Transferable skills:
+  - Problem solving — "Led cross-functional initiatives to reduce errors"
+  - Communication — "Presented product updates to stakeholders"
 
-Prerequisites
-- Node.js 18+ (or a compatible environment such as Bun). The project includes a `bun.lock` but the app works with npm/yarn/pnpm.
-- Git
+- Interview prep (gaps to address):
+  1. Review GraphQL basics
+  2. Prepare examples of system design
 
-Clone and run locally:
-```bash
-git clone https://github.com/MoshoodSO/career-compass.git
-cd career-compass
-
-# Install dependencies (npm shown - you can use yarn/pnpm/bun)
-npm install
-
-# Start dev server
-npm run dev
-```
-
-Open http://localhost:5173 (or the Vite dev URL printed in your terminal) to view the app.
-
-Environment / webhook
-- The front-end POSTs to a webhook URL; by default the project README mentions `WEBHOOK_URL_PLACEHOLDER`. Replace this placeholder in the client configuration (or use an env variable and inject it in the build) to point to your analysis webhook.
-- Make sure your webhook returns the JSON object matching the API contract above.
+- Fit summary:
+  "Your experience in X, Y, and Z maps to the role because...."
 
 ---
 
-## Development & build scripts
-
-Common npm scripts (see `package.json`):
-- `npm run dev` — start Vite dev server
-- `npm run build` — build production bundle
-- `npm run build:dev` — build in development mode
-- `npm run preview` — preview the production build
-- `npm run lint` — run ESLint across the repo
-- `npm run format` — run Prettier to format code
+## Privacy & files
+- The app accepts PDF uploads for your resume and LinkedIn profile.
+- If you’re concerned about privacy, don’t upload files containing sensitive personal data. For testing, you can use a redacted or sample CV.
 
 ---
 
-## Usage examples
-
-Client: submit form (example)
-```ts
-// Example client-side snippet showing how the app sends data.
-// The app's UI does this automatically; this is an example of the same approach.
-async function submitProfile({ cvFile, jobDescription, linkedinFile, webhookUrl }: {
-  cvFile: File,
-  jobDescription: string,
-  linkedinFile?: File,
-  webhookUrl: string
-}) {
-  const fd = new FormData();
-  fd.set("cv", cvFile);
-  fd.set("job_description", jobDescription);
-  if (linkedinFile) fd.set("linkedin_pdf", linkedinFile);
-
-  const res = await fetch(webhookUrl, { method: "POST", body: fd });
-  if (!res.ok) throw new Error('Something went wrong — please try again.');
-
-  const json = await res.json();
-  // json must contain the exact keys specified in the API contract
-  return json;
-}
-```
-
-Webhook: expected response shape (example)
-```json
-{
-  "confidence_letter": "Dear Hiring Team...\n\nI believe I am a strong fit because...",
-  "cv_recommendations": [
-    "Add metrics for your last role (e.g., increased conversion by 20%).",
-    "Re-order skills to highlight JavaScript/TypeScript experience."
-  ],
-  "linkedin_recommendations": [
-    "Add a concise summary emphasizing product + engineering experience.",
-    "Include a few bullets under your latest role with measurable outcomes."
-  ],
-  "transferable_skills": [
-    { "skill": "Problem solving", "explanation": "Led cross-functional bug triage and reduced cycle time..." },
-    { "skill": "Communication", "explanation": "Presented roadmap to stakeholders and synthesized feedback..." }
-  ],
-  "can_apply": true,
-  "gaps_to_address": [
-    "Familiarize yourself with GraphQL basics.",
-    "Prepare examples of system design at scale."
-  ],
-  "career_fit_explanation": "Based on your experience in X, Y and the job requirements, you are a reasonable match because..."
-}
-```
-
-Curl example for webhook testing
-```bash
-curl -X POST "https://your-webhook.example/analysis" \
-  -F "cv=@/path/to/resume.pdf" \
-  -F "job_description=Paste the job description here..." \
-  -F "linkedin_pdf=@/path/to/linkedin.pdf"
-```
+## Where to go from here
+- Use the copy buttons to paste suggestions into your cover letter, CV editor, or LinkedIn profile.
+- If the advice highlights gaps, make a short study plan (e.g., "3 days to review GraphQL basics, 2 practice system design answers").
+- If you want more targeted help (mock interviews, CV rewrite), open an issue on GitHub describing what you need.
 
 ---
 
-## Contributing
-- Please open issues or PRs for bugs, improvements, or new features.
-- Keep changes small and focused. If you use the Lovable editor, remember that commits sync back to this repository; avoid force-pushing or history-rewriting operations for branches that are published/synced.
-
-Developer notes
-- The app uses TanStack Start file-based routing — route files live in `src/routes/`. See `src/routes/README.md` for routing conventions.
-- UI primitives live under `src/components/ui/` and are composed into the app pages.
+## Technologies (non-technical summary)
+This project was built with modern web tools and libraries so it feels fast and responsive in your browser. It uses a set of ready-made user interface pieces for accessibility and a lightweight build system to power the site. (If you want the exact list of libraries and tools, see the project's package manifest.)
 
 ---
 
 ## License
-This project is provided under the MIT License. See the LICENSE file for details.
+This project is available under the MIT License.
 
 ---
-If you need the README committed to the repository, I can prepare the commit message and the file contents for you to apply.
+
+If you'd like the README to include screenshots, step-by-step non-technical guides for contributors, or a short FAQ for users, tell me which you'd prefer and I will update the file accordingly.
