@@ -3,6 +3,11 @@
 Career Copilot helps job seekers turn their CV and job descriptions into a clear, actionable plan. Upload your CV, paste the job description and (optionally) a LinkedIn export — get a friendly, easy-to-use report that tells you why you're a good fit, how to improve your CV and LinkedIn, which transferable skills to emphasize, and whether you should apply.
 
 ---
+## Workflow
+
+
+
+---
 
 ## Quick overview
 - Purpose: Give practical, personalized guidance to help you apply for jobs with more confidence.
