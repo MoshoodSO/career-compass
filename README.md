@@ -7,6 +7,13 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 
 ![workflow](https://github.com/MoshoodSO/career-compass/blob/main/graphics/workflow.jpg)
 
+## Screenshots
+
+|------------------------------------------------------------------|------------------------------------------------------------------|
+| Home page | Result |
+|------------------------------------------------------------------|------------------------------------------------------------------|
+
+
 ---
 
 ## Quick overview
