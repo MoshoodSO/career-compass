@@ -23,6 +23,13 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 - What you get: A short confidence letter, CV tips, LinkedIn tips, a skills summary, interview preparation gaps, and a plain-language explanation of how you fit the role.
 
 ---
+## Demo
+
+![demo](https://github.com/MoshoodSO/career-compass/blob/main/graphics/careercopilot.gif)
+
+
+
+---
 
 ## Key features
 - Upload your CV (PDF) and paste the job description — no complicated steps.
@@ -34,11 +41,6 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
   - Transferable skills and interview prep (what to highlight and what to study)
   - How you fit the role (a plain-language summary)
 - Copy buttons on each section let you quickly paste text into emails, applications or documents.
-
----
-## Demo
-
-![demo](https://github.com/MoshoodSO/career-compass/blob/main/graphics/careercopilot.gif)
 
 ---
 
