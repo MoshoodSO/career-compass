@@ -38,6 +38,7 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 ---
 ## Demo
 
+![demo](https://github.com/MoshoodSO/career-compass/blob/main/graphics/careercopilot.gif)
 
 ---
 
