@@ -36,6 +36,10 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 - Copy buttons on each section let you quickly paste text into emails, applications or documents.
 
 ---
+## Demo
+
+
+---
 
 ## How it works 
 1. Fill in the form on the site: upload your CV (required), paste the job description (required), and upload LinkedIn PDF (optional).
