@@ -33,7 +33,7 @@ Career Copilot helps job seekers turn their CV and job descriptions into a clear
 
 ## Key features
 - Upload your CV (PDF) and paste the job description — no complicated steps.
-- Optionally upload a LinkedIn PDF to get profile-specific tips.
+- Upload a LinkedIn PDF to get profile-specific tips.
 - Fast results presented as five clear sections you can expand and copy:
   - Why you can do this (a short confidence letter you can use in applications)
   - How to strengthen your CV (easy, actionable suggestions)
