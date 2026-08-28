@@ -107,3 +107,9 @@ This project is available under the MIT License.
 ---
 
 If you'd like the README to include screenshots, step-by-step non-technical guides for contributors, or a short FAQ for users, tell me which you'd prefer and I will update the file accordingly.
+
+
+## Author
+
+- Shoyombo Moshood
+- [LinkedIn](https://www.linkedin.com/in/shoyombo-moshood-582003126/)
