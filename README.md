@@ -111,5 +111,5 @@ If you'd like the README to include screenshots, step-by-step non-technical guid
 
 ## Author
 
-- Shoyombo Moshood
-- [LinkedIn](https://www.linkedin.com/in/shoyombo-moshood-582003126/)
+Shoyombo Moshood \
+  Contact: [LinkedIn](https://www.linkedin.com/in/shoyombo-moshood-582003126/)
