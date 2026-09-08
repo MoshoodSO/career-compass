@@ -96,7 +96,7 @@ If you're not running the site from the live URL and prefer to run it on your co
 
 ---
 
-## Technologies (non-technical summary)
+## Technologies
 This project was built with modern web tools and libraries so it feels fast and responsive in your browser. It uses a set of ready-made user interface pieces for accessibility and a lightweight build system to power the site. (If you want the exact list of libraries and tools, see the project's package manifest.)
 
 ---
